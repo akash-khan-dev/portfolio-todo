@@ -2,14 +2,14 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const router = require("./router/index");
-const mongoDbConnection = require("./DbConnection/mongoConnect");
+const mongoConfig = require("./DbConnection/mongoConfig");
 const app = express();
 
 //  middleware
 app.use(express.json());
 app.use(cors());
 // database
-mongoDbConnection();
+mongoConfig();
 
 app.use(router);
 
