@@ -2,12 +2,15 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const router = require("./router/index");
+const mongoDbConnection = require("./DbConnection/mongoConnect");
 const app = express();
 
 //  middleware
 app.use(express.json());
 app.use(cors());
-// respond with "hello world" when a GET request is made to the homepage
+// database
+mongoDbConnection();
+
 app.use(router);
 
 const PORT = process.env.PORT || 3000;

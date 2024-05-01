@@ -1,7 +1,5 @@
 const router = require("express").Router();
-
-router.get("/registration", (req, res) => {
-  res.send("hello world");
-});
+const registrationController = require("../../controller/registrationController");
+router.get("/registration", registrationController);
 
 module.exports = router;
