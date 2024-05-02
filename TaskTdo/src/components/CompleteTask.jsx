@@ -1,35 +1,68 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { MdCheck, MdDeleteOutline } from "react-icons/md";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 export const CompleteTask = () => {
+  const [completeDataState, setCompleteDataState] = useState([]);
+  useEffect(() => {
+    const getCompleteTask = async () => {
+      try {
+        const URL = "http://localhost:8000/api/v1/task/showcompletetasks";
+        const data = await axios.get(URL);
+        setCompleteDataState(data.data.data);
+      } catch (err) {
+        toast.error(err.response.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
+    };
+    getCompleteTask();
+  }, completeDataState);
   return (
     <>
-      <div className="py-11">
-        <div className="text-center">
-          <h2 className="font-semibold text-3xl text-[#444444]">
-            Complete Task
-          </h2>
-        </div>
-        <div className="mt-10 flex items-center gap-5 mb-11">
-          <div className="w-[8%]">
-            <MdCheck size={30} color="#08CC27" />
+      <ToastContainer />
+      {completeDataState && (
+        <div className="py-11">
+          <div className="text-center">
+            {completeDataState && (
+              <h2 className="font-semibold text-3xl text-[#444444]">
+                Complete Task
+              </h2>
+            )}
           </div>
-          <div className="flex w-[88%] border-b-2">
-            <div className="w-[90%]">
-              <h4 className=" font-semibold text-lg text-[#BEBEBE] leading-[20px]">
-                <del>Leiteadfadwsf;ladskfl;kadsl;fkl;</del>
-              </h4>
-              <p className="font-normal text-sm text-[#BEBEBE] leading-[16px]">
-                <del> 3 caixas</del>
-              </p>
+          {completeDataState.map((data, i) => (
+            <div key={i} className="mt-10 flex items-center gap-5 mb-11">
+              <div className="w-[8%]">
+                <MdCheck size={30} color="#08CC27" />
+              </div>
+              <div className="flex w-[88%] border-b-2">
+                <div className="w-[90%]">
+                  <h4 className=" font-semibold text-lg text-[#BEBEBE] leading-[20px]">
+                    <del>{data.title}</del>
+                  </h4>
+                  <p className="font-normal text-sm text-[#BEBEBE] leading-[16px]">
+                    <del>{data.description}</del>
+                  </p>
+                </div>
+                <div className="w-5%">
+                  <button className="py-1 px-2  rounded-md">
+                    <MdDeleteOutline size={30} color="#FF9999" />
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="w-5%">
-              <button className="py-1 px-2  rounded-md">
-                <MdDeleteOutline size={30} color="#FF9999" />
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
+      )}
     </>
   );
 };

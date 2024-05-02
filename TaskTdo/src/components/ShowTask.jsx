@@ -10,12 +10,21 @@ export const ShowTask = () => {
         const URL = "http://localhost:8000/api/v1/task/showtasks";
         const data = await axios.get(URL);
         setTaskState(data.data.data);
-      } catch (e) {
-        console.log(e.message);
+      } catch (err) {
+        toast.error(err.response.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       }
     };
     getAllTasks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, taskState);
 
   const handleClick = async (item) => {
