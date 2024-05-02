@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
-
+import { Bounce, ToastContainer, toast } from "react-toastify";
 export const ShowTask = () => {
   const [taskState, setTaskState] = useState([]);
   useEffect(() => {
@@ -18,11 +18,31 @@ export const ShowTask = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, taskState);
 
-  const handleClick = (data) => {
-    console.log(data);
+  const handleClick = async (item) => {
+    try {
+      const URl = "http://localhost:8000/api/v1/task/complete";
+      const data = await axios.post(URl, {
+        title: item.title,
+        description: item.description,
+        userId: item.userId,
+      });
+    } catch (err) {
+      toast.error(err.response.data.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
   };
   return (
     <>
+      <ToastContainer />
       {taskState &&
         taskState.map((data, i) => (
           <div key={i} className="mt-10 flex items-center gap-5">
