@@ -35,6 +35,8 @@ export const ShowTask = () => {
         description: item.description,
         userId: item.userId,
       });
+      const DeleteURL = `http://localhost:8000/api/v1/task/taskdelete/${item._id}`;
+      await axios.delete(DeleteURL);
     } catch (err) {
       toast.error(err.response.data.message, {
         position: "top-right",
@@ -51,7 +53,7 @@ export const ShowTask = () => {
   };
   const handleDelete = async (item) => {
     try {
-      const URL = `http://localhost:8000/api/v1/task/${item._id}`;
+      const URL = `http://localhost:8000/api/v1/task/taskdelete/${item._id}`;
       const data = await axios.delete(URL);
     } catch (err) {
       toast.error(err.response.data.message, {

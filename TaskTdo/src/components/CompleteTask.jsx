@@ -27,6 +27,25 @@ export const CompleteTask = () => {
     };
     getCompleteTask();
   }, completeDataState);
+
+  const handleDelete = async (item) => {
+    try {
+      const URL = `http://localhost:8000/api/v1/task/completetaskdelte/${item._id}`;
+      const data = await axios.delete(URL);
+    } catch (err) {
+      toast.error(err.response.data.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
   return (
     <>
       <ToastContainer />
@@ -54,7 +73,10 @@ export const CompleteTask = () => {
                   </p>
                 </div>
                 <div className="w-5%">
-                  <button className="py-1 px-2  rounded-md">
+                  <button
+                    onClick={() => handleDelete(data)}
+                    className="py-1 px-2  rounded-md"
+                  >
                     <MdDeleteOutline size={30} color="#FF9999" />
                   </button>
                 </div>
