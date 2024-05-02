@@ -13,8 +13,7 @@ const Home = () => {
           <HomeTop />
           <CreateTask />
           <ShowTask />
-          <ShowTask />
-          <ShowTask />
+
           <CompleteTask />
         </div>
       </div>
