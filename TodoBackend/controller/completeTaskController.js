@@ -1,15 +1,9 @@
-const Task = require("../models/TaskModel");
+const CompleteTask = require("../models/completeTaskModel");
 const createTaskController = async (req, res, next) => {
   try {
     const { title, description, userId } = req.body;
 
-    if (!title || !description) {
-      return res.status(404).json({
-        status: "error",
-        message: "title and description are required",
-      });
-    }
-    const task = new Task({
+    const task = new CompleteTask({
       title: title,
       description: description,
       userId: userId,
