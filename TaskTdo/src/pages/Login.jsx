@@ -1,36 +1,45 @@
 import { Button, Form, Input } from "antd";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 const Login = () => {
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
-      // const RegisterURL = "http://localhost:8000/api/v1/auth/registration";
-      // const data = await axios.post(RegisterURL, {
-      //   name: values.username,
-      //   email: values.email,
-      //   password: values.password,
-      // });
-      // toast.success(data.data.data.message, {
-      //   position: "top-right",
-      //   autoClose: 2000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "light",
-      //   transition: Bounce,
-      // });
+      const loginURL = "http://localhost:8000/api/v1/auth/login";
+      const data = await axios.post(loginURL, {
+        email: values.email,
+        password: values.password,
+      });
+
+      localStorage.setItem("user", JSON.stringify(data.data.user));
+
+      toast.success(data.data.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setTimeout(() => {
+        navigate(`/`);
+      }, 2000);
     } catch (err) {
-      // toast.error(err.response.data.message, {
-      //   position: "top-right",
-      //   autoClose: 2000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "light",
-      //   transition: Bounce,
-      // });
+      toast.error(err.response.data.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
   };
   const onFinishFailed = (errorInfo) => {
@@ -38,6 +47,7 @@ const Login = () => {
   };
   return (
     <>
+      <ToastContainer />
       <div className=" mx-auto  flex justify-center pt-12 pb-20 h-screen">
         <div className="bg-white rounded-md w-[30%]">
           <h1 className="text-center mt-6 font-semibold text-4xl text-blue-300">
