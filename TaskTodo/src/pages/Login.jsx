@@ -1,9 +1,13 @@
 import { Button, Form, Input } from "antd";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import { userInfo } from "../ReduxFeature/Slice/UserSlice";
 const Login = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
   const onFinish = async (values) => {
     try {
       const loginURL = "http://localhost:8000/api/v1/auth/login";
@@ -11,8 +15,8 @@ const Login = () => {
         email: values.email,
         password: values.password,
       });
-
       localStorage.setItem("user", JSON.stringify(data.data.user));
+      dispatch(userInfo(data.data.user));
 
       toast.success(data.data.message, {
         position: "top-right",
