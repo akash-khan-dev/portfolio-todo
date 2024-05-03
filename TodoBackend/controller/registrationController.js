@@ -1,9 +1,11 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const sendEmail = require("../utils/sendMail");
 const saltRounds = 12;
 const registrationController = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, verifyEmail } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -20,12 +22,17 @@ const registrationController = async (req, res, next) => {
         name: name,
         email: email,
         password: hash,
+        verifyEmail: verifyEmail,
       });
       userData.save();
+      jwt.sign({ email: email }, "shhhhh", function (err, token) {
+        sendEmail(email, "verify", token, "verified your email");
+      });
       return res.status(200).json({
         status: "success",
         data: {
           userData: userData,
+          message: "Registration successful check Your Email",
         },
       });
     });

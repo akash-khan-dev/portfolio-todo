@@ -1,14 +1,48 @@
 import { Button, Form, Input } from "antd";
+import axios from "axios";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const Registration = () => {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const onFinish = async (values) => {
+    try {
+      const RegisterURL = "http://localhost:8000/api/v1/auth/registration";
+      const data = await axios.post(RegisterURL, {
+        name: values.username,
+        email: values.email,
+        password: values.password,
+      });
+
+      toast.success(data.data.data.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } catch (err) {
+      toast.error(err.response.data.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
   return (
     <>
+      <ToastContainer />
       <div className=" mx-auto  flex justify-center pt-12 pb-20 h-screen">
         <div className="bg-white rounded-md w-[30%] pr-5">
           <h1 className="text-center mt-3 font-semibold text-4xl text-blue-300 mb-10 ml-5">
@@ -65,13 +99,6 @@ const Registration = () => {
             >
               <Input.Password />
             </Form.Item>
-
-            <div className="flex pb-5">
-              <label htmlFor="" style={{ marginLeft: "50px" }}>
-                Profile
-              </label>
-              <input style={{ marginLeft: "50px" }} type="file" />
-            </div>
 
             <Form.Item
               wrapperCol={{
