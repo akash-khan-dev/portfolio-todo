@@ -11,10 +11,11 @@ const ProfileShow = () => {
   const [uploadUrl, setUploadUrl] = useState(null);
 
   const choosefile = useRef();
+  const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     const getUser = async () => {
       try {
-        const UserURL = `http://localhost:8000/api/v1/user/${"663280f143646cf391839cf7"}`;
+        const UserURL = `http://localhost:8000/api/v1/user/${user._id}`;
         const data = await axios.get(UserURL);
         setUserState(data.data.data);
       } catch (e) {
