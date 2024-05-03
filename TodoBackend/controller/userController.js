@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 const userController = async (req, res, next) => {
   try {
-    const { id } = req.body;
+    const id = req.params.id;
     const user = await User.findById(id);
     if (!user) {
       return res
