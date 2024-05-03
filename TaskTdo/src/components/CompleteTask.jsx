@@ -26,7 +26,7 @@ export const CompleteTask = () => {
       }
     };
     getCompleteTask();
-  }, completeDataState);
+  }, [completeDataState]);
 
   const handleDelete = async (item) => {
     try {
