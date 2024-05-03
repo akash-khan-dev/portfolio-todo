@@ -26,11 +26,12 @@ export const CompleteTask = () => {
       }
     };
     getCompleteTask();
-  }, [completeDataState]);
+  }, []);
 
   const handleDelete = async (item) => {
     try {
       const URL = `http://localhost:8000/api/v1/task/completetaskdelte/${item._id}`;
+      // eslint-disable-next-line no-unused-vars
       const data = await axios.delete(URL);
     } catch (err) {
       toast.error(err.response.data.message, {

@@ -3,13 +3,21 @@ import { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 export const ShowTask = () => {
-  const [taskState, setTaskState] = useState([]);
+  const [taskState, setTaskState] = useState(null);
+  const user = JSON.parse(localStorage.getItem("user"));
+  // TODO: user condition and show task
   useEffect(() => {
     const getAllTasks = async () => {
       try {
         const URL = "http://localhost:8000/api/v1/task/showtasks";
         const data = await axios.get(URL);
-        setTaskState(data.data.data);
+        const taskArr = [];
+        data.data.data.forEach((task) => {
+          if (task.userId == user._id) {
+            taskArr.push(task);
+          }
+        });
+        setTaskState(taskArr);
       } catch (err) {
         toast.error(err.response.data.message, {
           position: "top-right",
@@ -25,11 +33,13 @@ export const ShowTask = () => {
       }
     };
     getAllTasks();
-  }, [taskState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const handleClick = async (item) => {
+  const handleComplete = async (item) => {
     try {
       const URl = "http://localhost:8000/api/v1/task/complete";
+      // eslint-disable-next-line no-unused-vars
       const data = await axios.post(URl, {
         title: item.title,
         description: item.description,
@@ -54,6 +64,7 @@ export const ShowTask = () => {
   const handleDelete = async (item) => {
     try {
       const URL = `http://localhost:8000/api/v1/task/taskdelete/${item._id}`;
+      // eslint-disable-next-line no-unused-vars
       const data = await axios.delete(URL);
     } catch (err) {
       toast.error(err.response.data.message, {
@@ -77,7 +88,7 @@ export const ShowTask = () => {
           <div key={i} className="mt-10 flex items-center gap-5">
             <div className="w-[12%]">
               <button
-                onClick={() => handleClick(data)}
+                onClick={() => handleComplete(data)}
                 className="py-1 px-4 bg-blue-300 rounded-md font-medium text-white"
               >
                 Done

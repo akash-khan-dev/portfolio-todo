@@ -21,11 +21,14 @@ const CreateTask = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const user = JSON.parse(localStorage.getItem("user"));
       setLoading(true);
       const URL = "http://localhost:8000/api/v1/task/create";
+      // eslint-disable-next-line no-unused-vars
       const data = await axios.post(URL, {
         title: inputValue.title,
         description: inputValue.description,
+        userId: user._id,
       });
       setLoading(false);
       setInputValue({
