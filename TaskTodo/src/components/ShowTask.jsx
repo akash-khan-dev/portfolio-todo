@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 export const ShowTask = () => {
-  const [taskState, setTaskState] = useState(null);
+  const [taskState, setTaskState] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
   // TODO: user condition and show task
   useEffect(() => {

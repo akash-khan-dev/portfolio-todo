@@ -5,12 +5,19 @@ import { Bounce, ToastContainer, toast } from "react-toastify";
 
 export const CompleteTask = () => {
   const [completeDataState, setCompleteDataState] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     const getCompleteTask = async () => {
       try {
         const URL = "http://localhost:8000/api/v1/task/showcompletetasks";
         const data = await axios.get(URL);
-        setCompleteDataState(data.data.data);
+        const completeTaskArr = [];
+        data.data.data.forEach((task) => {
+          if (task.userId == user._id) {
+            completeTaskArr.push(task);
+          }
+        });
+        setCompleteDataState(completeTaskArr);
       } catch (err) {
         toast.error(err.response.data.message, {
           position: "top-right",
@@ -50,14 +57,12 @@ export const CompleteTask = () => {
   return (
     <>
       <ToastContainer />
-      {completeDataState && (
+      {completeDataState.length > 0 && (
         <div className="py-11">
           <div className="text-center">
-            {completeDataState && (
-              <h2 className="font-semibold text-3xl text-[#444444]">
-                Complete Task
-              </h2>
-            )}
+            <h2 className="font-semibold text-3xl text-[#444444]">
+              Complete Task
+            </h2>
           </div>
           {completeDataState.map((data, i) => (
             <div key={i} className="mt-10 flex items-center gap-5 mb-11">
