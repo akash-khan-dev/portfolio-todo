@@ -25,7 +25,7 @@ export const ShowTask = () => {
       }
     };
     getAllTasks();
-  }, taskState);
+  }, [taskState]);
 
   const handleClick = async (item) => {
     try {

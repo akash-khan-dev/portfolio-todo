@@ -14,6 +14,10 @@ const userModel = new Schema({
     type: String,
     required: true,
   },
+  verifyEmail: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = model("User", userModel);
