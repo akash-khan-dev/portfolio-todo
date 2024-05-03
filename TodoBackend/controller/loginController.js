@@ -11,6 +11,11 @@ const loginController = async (req, res, next) => {
         message: "Incorrect your email or password",
       });
     }
+    if (user.verifyEmail == false) {
+      return res
+        .status(403)
+        .json({ status: "error", message: "you are not verified user" });
+    }
     await bcrypt.compare(password, user.password).then(function (result) {
       if (!result) {
         return res.status(400).json({
@@ -21,6 +26,7 @@ const loginController = async (req, res, next) => {
       return res.status(200).json({
         status: "success",
         message: "Login successful",
+        user: user,
       });
     });
   } catch (err) {
