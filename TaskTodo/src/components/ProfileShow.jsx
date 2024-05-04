@@ -2,11 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { BsImages } from "react-icons/bs";
 import { Modal } from "antd";
+import { RiLogoutCircleLine } from "react-icons/ri";
 // import profilepciture from "../../../TodoBackend/images/1714810983183-688521720-WhatsApp Image 2024-04-01 at 00.15.10_1d0e8881.jpg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import { userInfo } from "../ReduxFeature/Slice/UserSlice";
 
 const ProfileShow = () => {
+  const dispatch = useDispatch();
   const [userState, setUserState] = useState();
   const [selectedFile, setSelectedFiles] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -79,6 +82,12 @@ const ProfileShow = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("user");
+    dispatch(userInfo(null));
+  };
+
   console.log(uploadUrl);
 
   const img = "../../public/images";
@@ -114,6 +123,13 @@ const ProfileShow = () => {
           <h5 className="text-center font-semibold text-lg text-[#444444] mt-2">
             {userState?.name}
           </h5>
+        </div>
+        <div className="mt-96">
+          <RiLogoutCircleLine
+            size={25}
+            className="ml-10 cursor-pointer"
+            onClick={handleLogOut}
+          />
         </div>
         <Modal
           title="Confirm Upload Your Profile"
