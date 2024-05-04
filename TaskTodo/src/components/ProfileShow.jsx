@@ -3,6 +3,7 @@ import axios from "axios";
 import { BsImages } from "react-icons/bs";
 import { Modal } from "antd";
 import profilepciture from "../../../TodoBackend/images/1714711124786-46016453-WhatsApp Image 2024-04-01 at 00.15.10_1d0e8881.jpg";
+import { useSelector } from "react-redux";
 
 const ProfileShow = () => {
   const [userState, setUserState] = useState();
@@ -11,7 +12,7 @@ const ProfileShow = () => {
   const [uploadUrl, setUploadUrl] = useState(null);
 
   const choosefile = useRef();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = useSelector((user) => user.userInformation.user);
   useEffect(() => {
     const getUser = async () => {
       try {

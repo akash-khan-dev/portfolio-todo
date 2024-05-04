@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 export const ShowTask = () => {
   const [taskState, setTaskState] = useState([]);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = useSelector((user) => user.userInformation.user);
 
   useEffect(() => {
     const getAllTasks = async () => {

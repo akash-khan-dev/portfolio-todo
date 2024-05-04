@@ -4,6 +4,7 @@ import axios from "axios";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import BeatLoader from "react-spinners/BeatLoader";
 import { useSelector } from "react-redux";
+
 const CreateTask = () => {
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState({
@@ -19,11 +20,11 @@ const CreateTask = () => {
     }));
   };
 
+  const user = useSelector((user) => user.userInformation.user);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
       setLoading(true);
       const URL = "http://localhost:8000/api/v1/task/create";
       // eslint-disable-next-line no-unused-vars

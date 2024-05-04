@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdCheck, MdDeleteOutline } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 
 export const CompleteTask = () => {
   const [completeDataState, setCompleteDataState] = useState([]);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = useSelector((user) => user.userInformation.user);
   useEffect(() => {
     const getCompleteTask = async () => {
       try {
