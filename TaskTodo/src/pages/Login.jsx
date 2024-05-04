@@ -1,7 +1,7 @@
 import { Button, Form, Input } from "antd";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { userInfo } from "../ReduxFeature/Slice/UserSlice";
 const Login = () => {
@@ -52,12 +52,18 @@ const Login = () => {
   return (
     <>
       <ToastContainer />
-      <div className=" mx-auto  flex justify-center pt-12 pb-20 h-screen">
-        <div className="bg-white rounded-md w-[30%]">
-          <h1 className="text-center mt-6 font-semibold text-4xl text-blue-300">
+      <div className=" mx-auto flex justify-center pt-28 mb-20 h-[100%]  ">
+        <div className="bg-white rounded-md w-[30%] ">
+          <h1 className="text-center mt-8 font-semibold text-4xl text-blue-300">
             Login Now
           </h1>
-          <div className="w-[100px] h-[100px] bg-black rounded-full mx-auto mt-8 mb-8"></div>
+          <div className="w-[100px] h-[100px] bg-black rounded-full mx-auto mt-8 mb-8 overflow-hidden">
+            <img
+              src="../../public/images/avatar.png"
+              className="w-[100%] h-[100%] object-cover"
+              alt="avatar"
+            />
+          </div>
           <div className="mr-10">
             <Form
               name="basic"
@@ -103,11 +109,19 @@ const Login = () => {
                   span: 20,
                 }}
               >
-                <Button type="primary" htmlType="submit">
+                <Button className="mb-3" type="primary" htmlType="submit">
                   Submit
                 </Button>
               </Form.Item>
             </Form>
+            <div className="text-center mb-16">
+              <p>
+                Don’t have an account ?{" "}
+                <Link className="text-red-500" to={"/registration"}>
+                  Sign up
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>

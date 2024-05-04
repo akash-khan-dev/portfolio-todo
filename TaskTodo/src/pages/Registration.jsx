@@ -1,5 +1,6 @@
 import { Button, Form, Input } from "antd";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const Registration = () => {
@@ -45,10 +46,16 @@ const Registration = () => {
       <ToastContainer />
       <div className=" mx-auto  flex justify-center pt-12 pb-20 h-screen">
         <div className="bg-white rounded-md w-[30%] pr-5">
-          <h1 className="text-center mt-3 font-semibold text-4xl text-blue-300 mb-10 ml-5">
+          <h1 className="text-center mt-5 font-semibold text-4xl text-blue-300 mb-10 ml-5">
             Registration Now
           </h1>
-          <div className="w-[100px] h-[100px] bg-black rounded-full mx-auto mb-8"></div>
+          <div className="w-[100px] h-[100px] bg-black rounded-full mx-auto mb-8 overflow-hidden">
+            <img
+              className="w-[100%] h-[100%] object-cover"
+              src="../../public/images/avatar.png"
+              alt="avatar"
+            />
+          </div>
           <Form
             name="basic"
             labelCol={{
@@ -111,6 +118,14 @@ const Registration = () => {
               </Button>
             </Form.Item>
           </Form>
+          <div className="text-center">
+            <p>
+              Already have an account ?{" "}
+              <Link className="text-red-500" to={"/login"}>
+                Sign In
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </>
