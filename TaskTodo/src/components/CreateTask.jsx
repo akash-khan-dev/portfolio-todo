@@ -56,8 +56,8 @@ const CreateTask = () => {
 
   return (
     <>
-      <ToastContainer />
       <div className="mt-5">
+        <ToastContainer />
         <form onSubmit={handleSubmit} className="flex gap-3">
           <div>
             <label className="block font-normal text-sm text-[#BEBEBE] pb-1">

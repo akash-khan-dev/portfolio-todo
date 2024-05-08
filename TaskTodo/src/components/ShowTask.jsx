@@ -35,7 +35,7 @@ export const ShowTask = () => {
     };
     getAllTasks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [taskState]);
 
   const handleComplete = async (item) => {
     try {

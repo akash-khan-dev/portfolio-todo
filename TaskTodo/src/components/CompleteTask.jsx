@@ -34,7 +34,7 @@ export const CompleteTask = () => {
       }
     };
     getCompleteTask();
-  }, []);
+  }, [completeDataState]);
 
   const handleDelete = async (item) => {
     try {

@@ -1,8 +1,8 @@
 const ProfilePic = require("../models/profileModel");
 const multer = require("multer");
+
 const uploadProfileController = async (req, res, next) => {
   try {
-    const { userId } = req.body;
     const storage = multer.diskStorage({
       destination: function (req, file, cb) {
         cb(null, "images");
@@ -16,6 +16,8 @@ const uploadProfileController = async (req, res, next) => {
     const upload = multer({ storage: storage }).single("avatar");
 
     upload(req, res, function (err) {
+      const { userId } = req.body;
+
       if (err instanceof multer.MulterError) {
         return res
           .status(500)
@@ -25,6 +27,7 @@ const uploadProfileController = async (req, res, next) => {
           .status(500)
           .json({ message: "Unknown error occurred", message: err });
       }
+
       const imageName = req.file.path;
       const profile = new ProfilePic({
         image: imageName,

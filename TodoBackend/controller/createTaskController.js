@@ -4,9 +4,9 @@ const createTaskController = async (req, res, next) => {
     const { title, description, userId } = req.body;
 
     if (!title || !description) {
-      return res.status(404).json({
+      return res.status(400).json({
         status: "error",
-        message: "title and description are required",
+        message: "title and description is required",
       });
     }
     const task = new Task({

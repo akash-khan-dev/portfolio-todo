@@ -3,7 +3,7 @@ import axios from "axios";
 import { BsImages } from "react-icons/bs";
 import { Modal } from "antd";
 import { RiLogoutCircleLine } from "react-icons/ri";
-// import profilepciture from "../../../TodoBackend/images/1714810983183-688521720-WhatsApp Image 2024-04-01 at 00.15.10_1d0e8881.jpg";
+import profilepciture from "../../public/images/avatar.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { userInfo } from "../ReduxFeature/Slice/UserSlice";
@@ -13,7 +13,7 @@ const ProfileShow = () => {
   const [userState, setUserState] = useState();
   const [selectedFile, setSelectedFiles] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [uploadUrl, setUploadUrl] = useState(null);
+  const [profile, setProfilePic] = useState([]);
 
   const choosefile = useRef();
   const user = useSelector((user) => user.userInformation.user);
@@ -55,6 +55,7 @@ const ProfileShow = () => {
       const URL = "http://localhost:8000/api/v1/profile/upload";
       const formData = new FormData();
       formData.append("avatar", selectedFile);
+      formData.append("userId", user._id);
 
       // eslint-disable-next-line no-unused-vars
       const data = await axios.post(URL, formData, {
@@ -62,7 +63,6 @@ const ProfileShow = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      setUploadUrl(data.data.data);
     } catch (error) {
       toast.error(error.response.data.message, {
         position: "top-right",
@@ -88,30 +88,56 @@ const ProfileShow = () => {
     dispatch(userInfo(null));
   };
 
-  console.log(uploadUrl);
+  useEffect(() => {
+    const getProfile = async () => {
+      try {
+        const url = "http://localhost:8000/api/v1/profile/show";
 
-  const img = "../../public/images";
+        const data = await axios.get(url);
+        const profileArray = [];
+        data.data.data.forEach((item) => {
+          if (user._id === item.userId) {
+            profileArray.push(item);
+          }
+        });
+        setProfilePic(profileArray);
+      } catch (error) {
+        toast.error(error.response.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
+    };
+    getProfile();
+  }, []);
+
+  const profileImage = profile.length > 0 && profile[0].image;
   return (
     <>
       <ToastContainer />
       <div className="absolute top-16 left-16">
         <div className="relative flex items-center group justify-center duration-300 transition-all">
-          <div className=" w-24 h-24 rounded-full overflow-hidden  ">
+          <div className=" w-24 h-24 rounded-full overflow-hidden  bg-green-500">
             <img
               className="w-[100%] h-[100%] object-cover"
-              src={`${img}/akash.jpg`}
-              alt="profile"
+              src={`http://localhost:8000/${profileImage}`}
+              alt=""
             />
           </div>
           <div
             onClick={() => choosefile.current.click()}
-            className="absolute w-24 h-24 rounded-full flex items-center justify-center cursor-pointer -z-10  group-hover:z-10 "
+            className="absolute w-24 h-24 rounded-full flex items-center justify-center cursor-pointer   z-10 "
             style={{
-              backgroundColor: " rgba(0, 0, 0, 0.50)",
+              backgroundColor: " rgba(0, 0, 0, 0.30)",
             }}
-          >
-            <BsImages color="white" />
-          </div>
+          ></div>
         </div>
         <input
           type="file"

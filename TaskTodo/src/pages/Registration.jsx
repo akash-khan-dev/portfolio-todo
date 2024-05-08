@@ -44,7 +44,7 @@ const Registration = () => {
   return (
     <>
       <ToastContainer />
-      <div className=" mx-auto  flex justify-center pt-12 pb-20 h-screen">
+      <div className=" mx-auto  flex justify-center pt-12 pb-20 h-[100%]">
         <div className="bg-white rounded-md w-[30%] pr-5">
           <h1 className="text-center mt-5 font-semibold text-4xl text-blue-300 mb-10 ml-5">
             Registration Now
@@ -118,7 +118,7 @@ const Registration = () => {
               </Button>
             </Form.Item>
           </Form>
-          <div className="text-center">
+          <div className="text-center mb-12">
             <p>
               Already have an account ?{" "}
               <Link className="text-red-500" to={"/login"}>
